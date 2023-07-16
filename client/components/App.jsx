@@ -6,7 +6,7 @@ import Menu from './Menu'
 import Login from './Login'
 import { Routes, Route } from 'react-router-dom'
 
-function App() {
+const App = () => {
   return (
     <div>
       <NavBar />
