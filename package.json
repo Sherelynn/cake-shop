@@ -4,15 +4,18 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "run-p webpack server",
-    "dev": "run-p client:watch server:watch",
-    "webpack": "webpack --config client/webpack.config.js",
-    "server": "node server",
-    "client:watch": "npm run webpack -- --watch",
-    "server:watch": "nodemon server",
-    "test": "jest --watch --noStackTrace",
+    "start": "node server",
+    "test": "jest",
+    "test:watch": "jest --noStackTrace --watchAll",
+    "dev": "run-p dev:client dev:server",
+    "dev:client": "npm run webpack -- --watch",
+    "dev:server": "nodemon --watch server server/index.js",
+    "build": "run-p build:client build:server",
+    "build:client": "npm run webpack -- --mode production",
+    "build:server": "npm run knex -- migrate:latest",
     "lint": "eslint --ext .js,.jsx .",
-    "knex": "knex --knexfile server/db/knexfile.js"
+    "webpack": "webpack --config ./client/webpack.config.js",
+    "knex": "knex --knexfile ./server/db/knexfile.js"
   },
   "babel": {
     "presets": [
