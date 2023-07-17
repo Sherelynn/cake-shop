@@ -13,9 +13,13 @@ const addFlavour = (newFlavour, db = connection) =>
 const updateFlavour = (id, updatedFlavour, db = connection) =>
   db('flavours').where({ id }).update(updatedFlavour)
 
+const deleteFlavour = (id, db = connection) =>
+  db('flavours').where({ id }).delete()
+
 module.exports = {
   getFlavours,
   getFlavourById,
   addFlavour,
   updateFlavour,
+  deleteFlavour,
 }
