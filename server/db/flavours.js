@@ -10,8 +10,12 @@ const getFlavourById = (id, db = connection) =>
 const addFlavour = (newFlavour, db = connection) =>
   db('flavours').insert(newFlavour, ['id'])
 
+const updateFlavour = (id, updatedFlavour, db = connection) =>
+  db('flavours').where({ id }).update(updatedFlavour)
+
 module.exports = {
   getFlavours,
   getFlavourById,
   addFlavour,
+  updateFlavour,
 }
