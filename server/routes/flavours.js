@@ -15,4 +15,18 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  db.addFlavour(req.body)
+    .then(([{ id }]) => {
+      return db.getFlavourById(id)
+    })
+    .then((flavour) => {
+      res.json(flavour)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({ errorMessage: 'Something went wrong' })
+    })
+})
+
 module.exports = router
