@@ -15,4 +15,18 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  db.addTreat(req.body)
+    .then(([{ id }]) => {
+      return db.getTreatById(id)
+    })
+    .then((treat) => {
+      res.json(treat)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({ errorMessage: 'Something went wrong' })
+    })
+})
+
 module.exports = router
