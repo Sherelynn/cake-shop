@@ -10,8 +10,12 @@ const getTreatById = (id, db = connection) =>
 const addTreat = (newTreat, db = connection) =>
   db('treats').insert(newTreat, ['id'])
 
+const updateTreat = (id, updatedTreat, db = connection) =>
+  db('treats').where({ id }).update(updatedTreat)
+
 module.exports = {
   getTreats,
   getTreatById,
   addTreat,
+  updateTreat,
 }

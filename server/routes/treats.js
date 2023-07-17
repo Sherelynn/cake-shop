@@ -29,4 +29,20 @@ router.post('/', (req, res) => {
     })
 })
 
+router.patch('/:id', (req, res) => {
+  const id = req.params.id
+  const updatedTreat = req.body
+  db.updateTreat(id, updatedTreat)
+    .then(() => {
+      return db.getTreatById(id)
+    })
+    .then((treat) => {
+      res.json(treat)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({ errorMessage: 'Something went wrong' })
+    })
+})
+
 module.exports = router
