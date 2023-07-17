@@ -13,9 +13,13 @@ const addCakeType = (newCakeType, db = connection) =>
 const updateCakeType = (id, updatedCaketype, db = connection) =>
   db('cake_types').where({ id }).update(updatedCaketype)
 
+const deleteCakeType = (id, db = connection) =>
+  db('cake_types').where({ id }).delete()
+
 module.exports = {
   getCakeTypes,
   getCakeTypeById,
   addCakeType,
   updateCakeType,
+  deleteCakeType,
 }
