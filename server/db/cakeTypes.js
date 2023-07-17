@@ -10,8 +10,12 @@ const getCakeTypeById = (id, db = connection) =>
 const addCakeType = (newCakeType, db = connection) =>
   db('cake_types').insert(newCakeType, ['id'])
 
+const updateCakeType = (id, updatedCaketype, db = connection) =>
+  db('cake_types').where({ id }).update(updatedCaketype)
+
 module.exports = {
   getCakeTypes,
   getCakeTypeById,
   addCakeType,
+  updateCakeType,
 }
