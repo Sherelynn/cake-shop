@@ -45,4 +45,15 @@ router.patch('/:id', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+  db.deleteTreat(req.params.id)
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({ errorMessage: 'Something went wrong' })
+    })
+})
+
 module.exports = router

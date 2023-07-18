@@ -13,9 +13,12 @@ const addTreat = (newTreat, db = connection) =>
 const updateTreat = (id, updatedTreat, db = connection) =>
   db('treats').where({ id }).update(updatedTreat)
 
+const deleteTreat = (id, db = connection) => db('treats').where({ id }).delete()
+
 module.exports = {
   getTreats,
   getTreatById,
   addTreat,
   updateTreat,
+  deleteTreat,
 }
