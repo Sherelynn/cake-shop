@@ -1,6 +1,4 @@
-const config = require('./knexfile').development
-
-const connection = require('knex')(config)
+const connection = require('./connection')
 
 const getFlavours = (db = connection) => db('flavours').select()
 
