@@ -74,5 +74,50 @@ body {
 }
 
 h1 {
-  margin-top: 20rem;
+  margin-top: 15rem;
+  text-align: center;
+  font-size: 5rem;
+}
+
+#cake-images {
+  width: 100%;
+  height: auto;
+  padding: 1rem 2rem;
+}
+
+.cake-image-tile {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 5rem;
+  width: 100%;
+  max-width: 130rem;
+  margin: 0 auto;
+}
+
+.cake-image {
+  height: calc(95% - 2rem);
+  width: 100%;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 43em) {
+  h1 {
+    font-size: 4rem;
+  }
+  .cake-image-tile {
+    grid-template-columns: 1fr;
+  }
+  .cake-image {
+    max-width: 100%;
+    max-height: 50rem;
+    object-fit: contain;
+  }
+}
+
+@media only screen and (max-width: 24.2em) {
+  h1 {
+    font-size: 3rem;
+    word-wrap: normal;
+    padding: 0 2rem;
+  }
 }
