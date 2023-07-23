@@ -23,7 +23,7 @@ const Home = () => {
       {error ? <div>Error loading image.</div> : null}
       <img
         src={imageUrl}
-        alt="close up cake on a plate"
+        alt="Close Up Cake on a Plate"
         className="homepage-image"
         onLoad={handleImageLoad}
         onError={handleImageError}
