@@ -1,59 +1,46 @@
 const express = require('express')
-
 const db = require('../db/cakeTypes')
-
 const router = express.Router()
+const handleErrors = require('./handleErrors')
 
-router.get('/', (req, res) => {
-  db.getCakeTypes()
-    .then((cakeTypes) => {
-      res.json(cakeTypes)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.send(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.get('/', async (req, res) => {
+  try {
+    const typesOfCake = await db.getCakeTypes()
+    res.json(typesOfCake)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.post('/', (req, res) => {
-  db.addCakeType(req.body)
-    .then(([{ id }]) => {
-      return db.getCakeTypeById(id)
-    })
-    .then((cakeType) => {
-      res.json(cakeType)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.post('/', async (req, res) => {
+  try {
+    const id = await db.addCakeType(req.body)
+    const typeOfCake = await db.getCakeTypeById(id)
+    res.json(typeOfCake)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const id = req.params.id
   const updatedCakeType = req.body
-  db.updateCakeType(id, updatedCakeType)
-    .then(() => {
-      return db.getCakeTypeById(id)
-    })
-    .then((cakeType) => {
-      res.json(cakeType)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+  try {
+    await db.updateCakeType(id, updatedCakeType)
+    const typeOfCake = await db.getCakeTypeById(id)
+    res.json(typeOfCake)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  db.deleteCakeType(req.params.id)
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.deleteCakeType(req.params.id)
+    res.sendStatus(200)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
 module.exports = router

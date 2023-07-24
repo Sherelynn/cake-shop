@@ -1,18 +1,23 @@
 const connection = require('./connection')
 
-const getCakeTypes = (db = connection) => db('cake_types').select()
+const getCakeTypes = async (db = connection) => await db('cake_types').select()
 
-const getCakeTypeById = (id, db = connection) =>
-  db('cake_types').where({ id }).select('id', 'cakeTypes', 'price').first()
+const getCakeTypeById = async (id, db = connection) =>
+  await db('cake_types')
+    .where({ id })
+    .select('id', 'cakeTypes', 'price')
+    .first()
 
-const addCakeType = (newCakeType, db = connection) =>
-  db('cake_types').insert(newCakeType, ['id'])
+const addCakeType = async (newCakeType, db = connection) => {
+  const [id] = await db('cake_types').insert(newCakeType)
+  return id
+}
 
-const updateCakeType = (id, updatedCaketype, db = connection) =>
-  db('cake_types').where({ id }).update(updatedCaketype)
+const updateCakeType = async (id, updatedCaketype, db = connection) =>
+  await db('cake_types').where({ id }).update(updatedCaketype)
 
-const deleteCakeType = (id, db = connection) =>
-  db('cake_types').where({ id }).delete()
+const deleteCakeType = async (id, db = connection) =>
+  await db('cake_types').where({ id }).delete()
 
 module.exports = {
   getCakeTypes,
