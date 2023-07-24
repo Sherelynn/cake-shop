@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import flavoursReducer from './flavours'
+import flavours from './flavours'
 
 export default combineReducers({
-  flavoursReducer,
+  flavours,
 })
