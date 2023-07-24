@@ -1,59 +1,47 @@
 const express = require('express')
-
 const db = require('../db/treats')
-
 const router = express.Router()
+const handleErrors = require('./handleErrors')
+const { renderSync } = require('sass')
 
-router.get('/', (req, res) => {
-  db.getTreats()
-    .then((treats) => {
-      res.json(treats)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.get('/', async (req, res) => {
+  try {
+    const treats = await db.getTreats()
+    res.json(treats)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.post('/', (req, res) => {
-  db.addTreat(req.body)
-    .then(([{ id }]) => {
-      return db.getTreatById(id)
-    })
-    .then((treat) => {
-      res.json(treat)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.post('/', async (req, res) => {
+  try {
+    const id = await db.addTreat(req.body)
+    const treat = await db.getTreatById(id)
+    res.json(treat)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const id = req.params.id
   const updatedTreat = req.body
-  db.updateTreat(id, updatedTreat)
-    .then(() => {
-      return db.getTreatById(id)
-    })
-    .then((treat) => {
-      res.json(treat)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+  try {
+    await db.updateTreat(id, updatedTreat)
+    const treat = await db.getTreatById(id)
+    res.json(treat)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  db.deleteTreat(req.params.id)
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.deleteTreat(req.params.id)
+    res.sendStatus(200)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
 module.exports = router

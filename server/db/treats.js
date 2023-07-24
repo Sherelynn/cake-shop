@@ -1,17 +1,20 @@
 const connection = require('./connection')
 
-const getTreats = (db = connection) => db('treats').select()
+const getTreats = async (db = connection) => await db('treats').select()
 
-const getTreatById = (id, db = connection) =>
-  db('treats').where({ id }).select('id', 'treats', 'price').first()
+const getTreatById = async (id, db = connection) =>
+  await db('treats').where({ id }).select('id', 'treats', 'price').first()
 
-const addTreat = (newTreat, db = connection) =>
-  db('treats').insert(newTreat, ['id'])
+const addTreat = async (newTreat, db = connection) => {
+  const [id] = await db('treats').insert(newTreat)
+  return id
+}
 
-const updateTreat = (id, updatedTreat, db = connection) =>
-  db('treats').where({ id }).update(updatedTreat)
+const updateTreat = async (id, updatedTreat, db = connection) =>
+  await db('treats').where({ id }).update(updatedTreat)
 
-const deleteTreat = (id, db = connection) => db('treats').where({ id }).delete()
+const deleteTreat = async (id, db = connection) =>
+  await db('treats').where({ id }).delete()
 
 module.exports = {
   getTreats,
