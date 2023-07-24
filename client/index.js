@@ -1,22 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
-// import { Provider } from 'react-redux'
-// import store from './store'
+import { Provider } from 'react-redux'
 
+import store from './store'
 import App from './components/App'
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   ReactDOM.render(<App />, document.getElementById('app'))
-// })
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    // <Provider store={store}>
+    <Provider store={store}>
       <Router>
         <App />
-      </Router>,
-    // </Provider>,
+      </Router>
+    </Provider>,
     document.getElementById('app'),
   )
 })
