@@ -1,59 +1,46 @@
 const express = require('express')
-
 const db = require('../db/flavours')
-
 const router = express.Router()
+const handleErrors = require('./handleErrors')
 
-router.get('/', (req, res) => {
-  db.getFlavours()
-    .then((flavours) => {
-      res.json(flavours)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.get('/', async (req, res) => {
+  try {
+    const flavours = await db.getFlavours()
+    res.json(flavours)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.post('/', (req, res) => {
-  db.addFlavour(req.body)
-    .then(([{ id }]) => {
-      return db.getFlavourById(id)
-    })
-    .then((flavour) => {
-      res.json(flavour)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.post('/', async (req, res) => {
+  try {
+    const id = await db.addFlavour(req.body)
+    const flavour = await db.getFlavourById(id)
+    res.json(flavour)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const id = req.params.id
   const updatedFlavour = req.body
-  db.updateFlavour(id, updatedFlavour)
-    .then(() => {
-      return db.getFlavourById(id)
-    })
-    .then((flavour) => {
-      res.json(flavour)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+  try {
+    await db.updateFlavour(id, updatedFlavour)
+    const flavour = await db.getFlavourById(id)
+    res.json(flavour)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  db.deleteFlavour(req.params.id)
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.status(500).json({ errorMessage: 'Something went wrong' })
-    })
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.deleteFlavour(req.params.id)
+    res.sendStatus(200)
+  } catch (err) {
+    handleErrors(res, err)
+  }
 })
 
 module.exports = router

@@ -1,18 +1,20 @@
 const connection = require('./connection')
 
-const getFlavours = (db = connection) => db('flavours').select()
+const getFlavours = async (db = connection) => await db('flavours').select()
 
-const getFlavourById = (id, db = connection) =>
-  db('flavours').where({ id }).select('id', 'flavours').first()
+const getFlavourById = async (id, db = connection) =>
+  await db('flavours').where({ id }).select('id', 'flavours').first()
 
-const addFlavour = (newFlavour, db = connection) =>
-  db('flavours').insert(newFlavour, ['id'])
+const addFlavour = async (newFlavour, db = connection) => {
+  const [id] = await db('flavours').insert(newFlavour)
+  return id
+}
 
-const updateFlavour = (id, updatedFlavour, db = connection) =>
-  db('flavours').where({ id }).update(updatedFlavour)
+const updateFlavour = async (id, updatedFlavour, db = connection) =>
+  await db('flavours').where({ id }).update(updatedFlavour)
 
-const deleteFlavour = (id, db = connection) =>
-  db('flavours').where({ id }).delete()
+const deleteFlavour = async (id, db = connection) =>
+  await db('flavours').where({ id }).delete()
 
 module.exports = {
   getFlavours,
