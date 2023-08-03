@@ -102,6 +102,17 @@ h1 {
 }
 
 @media only screen and (max-width: 43em) {
+  .navBar {
+    height: 13rem;
+    line-height: 1;
+  }
+  .navBar ul {
+    display: block;
+    width: 10rem;
+  }
+  .navBar a {
+    font-size: 2.5rem;
+  }
   h1 {
     font-size: 4rem;
   }
@@ -116,6 +127,14 @@ h1 {
 }
 
 @media only screen and (max-width: 24.2em) {
+  .logo {
+    display: none;
+  }
+  .navBar ul {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
   h1 {
     font-size: 3rem;
     word-wrap: normal;
