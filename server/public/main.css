@@ -70,7 +70,7 @@ body {
   object-fit: cover;
   height: calc(80% - 13rem);
   width: 100%;
-  padding: 0 30rem;
+  padding: 0 5rem;
 }
 
 h1 {
