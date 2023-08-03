@@ -7,7 +7,7 @@ const getFlavours = async () => {
     const res = await request.get(rootUrl)
     return res.body
   } catch (err) {
-    return Promise.reject(`Error fetching flavours: ${err.message}` )
+    return Promise.reject(`Error fetching flavours: ${err.message}`)
   }
 }
 
