@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <h2>We exquisitely create customised cakes for special occasions!</h2>
+      <h1>We exquisitely create customised cakes for special occasions!</h1>
       {loading ? <div>Loading...</div> : null}
       {error ? <div>Error loading image.</div> : null}
       <img
