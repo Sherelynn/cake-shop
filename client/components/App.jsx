@@ -4,6 +4,7 @@ import Home from './Home'
 import Cakes from './Cakes'
 import Menu from './Menu'
 import Login from './Login'
+import Admin from './Admin'
 import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="cakes" element={<Cakes />}></Route>
         <Route path="menu" element={<Menu />}></Route>
         <Route path="login" element={<Login />}></Route>
+        <Route path="admin" element={<Admin />}></Route>
       </Routes>
     </div>
   )
