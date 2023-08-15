@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <div className="home">
       <h1>We exquisitely create customised cakes for special occasions!</h1>
-      {loading ? <div>Loading...</div> : null}
+      {loading ? <div className="loader"></div> : null}
       {error ? <div>Error loading image.</div> : null}
       <img
         src={imageUrl}
