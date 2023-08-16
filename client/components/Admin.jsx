@@ -1,10 +1,14 @@
 import React from 'react'
+import ManageFlavours from './ManageFlavours'
 
 const Admin = () => {
   return (
-    <main>
+    <div>
       <h1>Admin Page</h1>
-    </main>
+      <div>
+        <ManageFlavours />
+      </div>
+    </div>
   )
 }
 
