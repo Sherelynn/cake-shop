@@ -13,6 +13,17 @@ const ManageFlavours = () => {
     dispatch(fetchFlavours())
   }, [])
 
+  // Capitlise first letter of words in input
+
+  const firstLetterCapitalised = (input) => {
+    const words = input.split(' ')
+    const capitalisedWords = words.map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    })
+    const updatedCapitalisedWords = capitalisedWords.join(' ')
+    return updatedCapitalisedWords
+  }
+
   // Adding a new flavour
 
   const handleAddNewFlavour = (event) => {
@@ -21,7 +32,8 @@ const ManageFlavours = () => {
 
   const handleSubmitNewFlavour = (event) => {
     event.preventDefault()
-    dispatch(postFlavour(newFlavour))
+    const newFlavourCapitalised = firstLetterCapitalised(newFlavour)
+    dispatch(postFlavour(newFlavourCapitalised))
     setNewFlavour('')
   }
 
@@ -37,7 +49,8 @@ const ManageFlavours = () => {
 
   const handleSubmitUpdatedFlavour = (event) => {
     event.preventDefault()
-    dispatch(patchFlavour(flavourId, updatedFlavour))
+    const updatedFlavourCapitalised = firstLetterCapitalised(updatedFlavour)
+    dispatch(patchFlavour(flavourId, updatedFlavourCapitalised))
     setUpdatedFlavour('')
     setFlavourId('')
   }
