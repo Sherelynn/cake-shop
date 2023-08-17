@@ -3,6 +3,7 @@ import {
   FLAVOURS_REJECTED,
   GET_FLAVOURS_FULFILLED,
   ADD_FLAVOUR_FULFILLED,
+  UPDATE_FLAVOUR_FULFILLED,
 } from '../actions/flavours'
 
 const initialState = {
@@ -21,6 +22,15 @@ const flavours = (state = initialState, { type, payload }) => {
       return { ...state, data: payload }
     case ADD_FLAVOUR_FULFILLED:
       return { ...state, data: [...state.data, payload] }
+    case UPDATE_FLAVOUR_FULFILLED:
+      return {
+        ...state,
+        data: state.data.map((flavour) => {
+          return flavour.id === payload.id
+            ? { ...flavour, flavours: payload.flavours }
+            : flavour
+        }),
+      }
     default:
       return state
   }
