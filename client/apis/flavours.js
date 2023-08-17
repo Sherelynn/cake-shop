@@ -24,4 +24,15 @@ const addFlavour = async (newFlavour) => {
   }
 }
 
-export { getFlavours, addFlavour }
+const updateFlavour = async (flavourId, updatedFlavour) => {
+  try {
+    const res = await request
+      .patch(rootUrl + flavourId)
+      .send({ flavours: updatedFlavour })
+    return res.body
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getFlavours, addFlavour, updateFlavour }
