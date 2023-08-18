@@ -6,67 +6,54 @@ import {
   patchFlavour,
   delFlavour,
 } from '../actions/flavours'
+import firstLetterCapitalised from '../src/capsFirstLetter'
 
 const ManageFlavours = () => {
   const dispatch = useDispatch()
   const flavours = useSelector((state) => state.flavours.data)
-  const [newFlavour, setNewFlavour] = useState('')
-  const [flavourId, setFlavourId] = useState('')
-  const [updatedFlavour, setUpdatedFlavour] = useState('')
 
   useEffect(() => {
     dispatch(fetchFlavours())
   }, [])
 
-  // Capitlise first letter of words in input
+  const [formInput, setFormInput] = useState({
+    inputValue: '',
+    selectedOption: '',
+  })
 
-  const firstLetterCapitalised = (input) => {
-    const words = input.split(' ')
-    const capitalisedWords = words.map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1)
+  const { inputValue, selectedOption } = formInput
+
+  const handleInputChange = (event) => {
+    setFormInput({
+      ...formInput,
+      inputValue: event.target.value,
     })
-    const updatedCapitalisedWords = capitalisedWords.join(' ')
-    return updatedCapitalisedWords
   }
 
-  // Adding a new flavour
-
-  const handleAddNewFlavour = (event) => {
-    setNewFlavour(event.target.value)
+  const handleSelection = (event) => {
+    setFormInput({
+      ...formInput,
+      selectedOption: event.target.value,
+    })
   }
 
-  const handleSubmitNewFlavour = (event) => {
-    event.preventDefault()
-    const newFlavourCapitalised = firstLetterCapitalised(newFlavour)
-    dispatch(postFlavour(newFlavourCapitalised))
-    setNewFlavour('')
-  }
+  const handleAction = (actionType) => {
+    const { inputValue, selectedOption } = formInput
+    const updatedInputValue = firstLetterCapitalised(inputValue)
 
-  // Updating a flavour
+    if (actionType === 'add') {
+      dispatch(postFlavour(updatedInputValue))
+    } else if (actionType === 'update' && selectedOption) {
+      dispatch(patchFlavour(selectedOption, updatedInputValue))
+    } else if (actionType === 'delete' && selectedOption) {
+      dispatch(delFlavour(selectedOption))
+      dispatch(fetchFlavours())
+    }
 
-  const handleFlavourSelection = (event) => {
-    setFlavourId(event.target.value)
-  }
-
-  const handleUpdatedFlavour = (event) => {
-    setUpdatedFlavour(event.target.value)
-  }
-
-  const handleSubmitUpdatedFlavour = (event) => {
-    event.preventDefault()
-    const updatedFlavourCapitalised = firstLetterCapitalised(updatedFlavour)
-    dispatch(patchFlavour(flavourId, updatedFlavourCapitalised))
-    setUpdatedFlavour('')
-    setFlavourId('')
-  }
-
-  // Delete a flavour
-
-  const handleSubmitDeleteFlavour = (event) => {
-    event.preventDefault()
-    dispatch(delFlavour(flavourId))
-    dispatch(fetchFlavours())
-    setFlavourId('')
+    setFormInput({
+      inputValue: '',
+      selectedOption: '',
+    })
   }
 
   return (
@@ -81,10 +68,11 @@ const ManageFlavours = () => {
           <tbody>
             <tr>
               <td>
+                <p>Choose from selections to update or delete a flavour.</p>
                 <select
-                  name="Selections"
-                  value={flavourId}
-                  onChange={handleFlavourSelection}
+                  name={selectedOption}
+                  value={selectedOption}
+                  onChange={handleSelection}
                 >
                   <option value="">Selections:</option>
                   {flavours.map((flavour) => (
@@ -99,42 +87,29 @@ const ManageFlavours = () => {
               <td>
                 <input
                   type="text"
-                  placeholder="Add a new flavour:"
-                  value={newFlavour}
-                  onChange={handleAddNewFlavour}
+                  placeholder="Enter new flavour"
+                  value={inputValue}
+                  onChange={handleInputChange}
                 />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <button
                   className="input-button"
-                  type="submit"
-                  onClick={handleSubmitNewFlavour}
+                  onClick={() => handleAction('add')}
                 >
                   Add
                 </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Update a flavour:"
-                  value={updatedFlavour}
-                  onChange={handleUpdatedFlavour}
-                />
                 <button
                   className="input-button"
-                  type="submit"
-                  onClick={handleSubmitUpdatedFlavour}
+                  onClick={() => handleAction('update')}
                 >
                   Update
                 </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
                 <button
                   className="input-button"
-                  type="submit"
-                  onClick={handleSubmitDeleteFlavour}
+                  onClick={() => handleAction('delete')}
                 >
                   Delete
                 </button>
