@@ -35,4 +35,13 @@ const updateFlavour = async (flavourId, updatedFlavour) => {
   }
 }
 
-export { getFlavours, addFlavour, updateFlavour }
+const deleteFlavour = async (flavourId) => {
+  try {
+    const res = await request.del(rootUrl + flavourId)
+    return res.status
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getFlavours, addFlavour, updateFlavour, deleteFlavour }
