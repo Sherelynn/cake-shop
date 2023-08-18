@@ -256,6 +256,14 @@ input {
   background-color: var(--color-blue);
   border: 1px solid var(--color-blue);
   color: var(--color-lightBlue);
+  margin: 0.3rem;
+}
+
+/* Admin - table  */
+
+p {
+  margin: auto;
+  padding-bottom: 0.5rem;
 }
 
 /* Media Queries */
@@ -308,6 +316,9 @@ input {
   .user-details li {
     font-size: 2rem;
   }
+  p {
+    font-size: 2rem;
+  }
 }
 
 @media only screen and (max-width: 24.2em) {
@@ -347,6 +358,9 @@ input {
   }
   .user-details {
     font-size: 1.5rem;
+  }
+  p {
+    font-size: 1.8rem;
   }
 }
 
