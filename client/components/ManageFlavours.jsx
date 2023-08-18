@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFlavours, postFlavour, patchFlavour } from '../actions/flavours'
+import {
+  fetchFlavours,
+  postFlavour,
+  patchFlavour,
+  delFlavour,
+} from '../actions/flavours'
 
 const ManageFlavours = () => {
   const dispatch = useDispatch()
@@ -52,6 +57,15 @@ const ManageFlavours = () => {
     const updatedFlavourCapitalised = firstLetterCapitalised(updatedFlavour)
     dispatch(patchFlavour(flavourId, updatedFlavourCapitalised))
     setUpdatedFlavour('')
+    setFlavourId('')
+  }
+
+  // Delete a flavour
+
+  const handleSubmitDeleteFlavour = (event) => {
+    event.preventDefault()
+    dispatch(delFlavour(flavourId))
+    dispatch(fetchFlavours())
     setFlavourId('')
   }
 
@@ -112,6 +126,17 @@ const ManageFlavours = () => {
                   onClick={handleSubmitUpdatedFlavour}
                 >
                   Update
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button
+                  className="input-button"
+                  type="submit"
+                  onClick={handleSubmitDeleteFlavour}
+                >
+                  Delete
                 </button>
               </td>
             </tr>
