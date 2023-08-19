@@ -1,10 +1,7 @@
 import request from 'superagent'
+import handleError from './handleError'
 
 const rootUrl = '/api/v1/menu/flavours/'
-
-const handleError = (err) => {
-  return Promise.reject(`Error: ${err.message}`)
-}
 
 const getFlavours = async () => {
   try {
