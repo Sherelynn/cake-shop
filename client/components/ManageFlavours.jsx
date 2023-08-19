@@ -57,68 +57,64 @@ const ManageFlavours = () => {
   }
 
   return (
-    <div>
-      <div className="table-container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Flavours</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <p>Choose from selections to update or delete a flavour.</p>
-                <select
-                  name={selectedOption}
-                  value={selectedOption}
-                  onChange={handleSelection}
-                >
-                  <option value="">Selections:</option>
-                  {flavours.map((flavour) => (
-                    <option key={flavour.id} value={flavour.id}>
-                      {flavour.flavours}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Enter new flavour"
-                  value={inputValue}
-                  onChange={handleInputChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button
-                  className="input-button"
-                  onClick={() => handleAction('add')}
-                >
-                  Add
-                </button>
-                <button
-                  className="input-button"
-                  onClick={() => handleAction('update')}
-                >
-                  Update
-                </button>
-                <button
-                  className="input-button"
-                  onClick={() => handleAction('delete')}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      <thead>
+        <tr>
+          <th>Flavours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p>Choose from selections to update or delete a flavour.</p>
+            <select
+              name={selectedOption}
+              value={selectedOption}
+              onChange={handleSelection}
+            >
+              <option value="">Selections:</option>
+              {flavours.map((flavour) => (
+                <option key={flavour.id} value={flavour.id}>
+                  {flavour.flavours}
+                </option>
+              ))}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              placeholder="Enter new flavour"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button
+              className="input-button"
+              onClick={() => handleAction('add')}
+            >
+              Add
+            </button>
+            <button
+              className="input-button"
+              onClick={() => handleAction('update')}
+            >
+              Update
+            </button>
+            <button
+              className="input-button"
+              onClick={() => handleAction('delete')}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </>
   )
 }
 
