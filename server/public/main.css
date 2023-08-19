@@ -242,7 +242,7 @@ input {
   max-width: 15rem;
   border-radius: 0.5rem;
   border: 1px solid var(--color-blue);
-  margin: 0 0.4rem;
+  margin: 0.3rem 0.4rem;
   padding: 0.3rem 0.4rem;
   color: var(--color-purple);
   background-color: white;
@@ -256,7 +256,7 @@ input {
   background-color: var(--color-blue);
   border: 1px solid var(--color-blue);
   color: var(--color-lightBlue);
-  margin: 0.3rem;
+  margin: 0.2rem 0.4rem;
 }
 
 /* Admin - table  */
@@ -264,6 +264,10 @@ input {
 p {
   margin: auto;
   padding-bottom: 0.5rem;
+}
+
+.input-price {
+  max-width: 9rem;
 }
 
 /* Media Queries */
