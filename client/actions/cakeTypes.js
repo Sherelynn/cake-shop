@@ -1,10 +1,11 @@
-import { getCakeTypes, addCakeType } from '../apis/cakeTypes'
+import { getCakeTypes, addCakeType, updateCaketype } from '../apis/cakeTypes'
 
 // Action types
 export const CAKETYPES_PENDING = 'CAKETYPES_PENDING'
 export const CAKETYPES_REJECTED = 'CAKETYPES_REJECTED'
 export const GET_CAKETYPES_FULFILLED = 'GET_CAKETYPES_FULFILLED'
 export const ADD_CAKETYPE_FULFILLED = 'ADD_CAKETYPE_FULFILLED'
+export const UPDATE_CAKETYPE_FULFILLED = 'UPDATE_CAKETYPE_FULFILLED'
 
 // Action creators
 export const cakeTypesPending = () => ({
@@ -24,6 +25,11 @@ export const getCakeTypesFulfilled = (cakeTypes) => ({
 export const addCakeTypeFulfilled = (newCakeAndPrice) => ({
   type: ADD_CAKETYPE_FULFILLED,
   payload: newCakeAndPrice,
+})
+
+export const updateCaketypeFulfilled = (updatedCakeAndPrice) => ({
+  type: UPDATE_CAKETYPE_FULFILLED,
+  payload: updatedCakeAndPrice,
 })
 
 // Async thunk action creators using async/await
@@ -46,3 +52,18 @@ export const postCakeType = (newCake, newPrice) => async (dispatch) => {
     dispatch(cakeTypesRejected(`Error adding cake: ${err.message}`))
   }
 }
+
+export const patchCakeType =
+  (cakeId, updatedCake, updatedPrice) => async (dispatch) => {
+    dispatch(cakeTypesPending())
+    try {
+      const updatedCakeAndPrice = await updateCaketype(
+        cakeId,
+        updatedCake,
+        updatedPrice,
+      )
+      dispatch(updateCaketypeFulfilled(updatedCakeAndPrice))
+    } catch (err) {
+      dispatch(cakeTypesRejected(`Error updating cake: ${err.message}`))
+    }
+  }
