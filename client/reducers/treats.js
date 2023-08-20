@@ -2,6 +2,7 @@ import {
   TREATS_PENDING,
   TREATS_REJECTED,
   GET_TREATS_FULFILLED,
+  ADD_TREAT_FULFILLED,
 } from '../actions/treats'
 
 const initialState = {
@@ -18,6 +19,8 @@ const treats = (state = initialState, { type, payload }) => {
       return { ...state, error: payload }
     case GET_TREATS_FULFILLED:
       return { ...state, data: payload }
+    case ADD_TREAT_FULFILLED:
+      return { ...state, data: [...state.data, payload] }
     default:
       return state
   }
