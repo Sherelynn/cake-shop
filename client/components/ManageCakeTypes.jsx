@@ -46,7 +46,7 @@ const ManageCakeTypes = () => {
 
     if (actionType === 'add') {
       dispatch(postCakeType(updatedInputValue, priceInputValue))
-    } else if (actionType === 'update') {
+    } else if (actionType === 'update' && selectedOption) {
       dispatch(
         patchCakeType(selectedOption, updatedInputValue, priceInputValue),
       )
