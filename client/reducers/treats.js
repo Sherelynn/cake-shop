@@ -3,6 +3,7 @@ import {
   TREATS_REJECTED,
   GET_TREATS_FULFILLED,
   ADD_TREAT_FULFILLED,
+  UPDATE_TREAT_FULFILLED,
 } from '../actions/treats'
 
 const initialState = {
@@ -21,6 +22,15 @@ const treats = (state = initialState, { type, payload }) => {
       return { ...state, data: payload }
     case ADD_TREAT_FULFILLED:
       return { ...state, data: [...state.data, payload] }
+    case UPDATE_TREAT_FULFILLED:
+      return {
+        ...state,
+        data: state.data.map((treat) => {
+          return treat.id === payload.id
+            ? { ...treat, treats: payload.treats, price: payload.price }
+            : treat
+        }),
+      }
     default:
       return state
   }
