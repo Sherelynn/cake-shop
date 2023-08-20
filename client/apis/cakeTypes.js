@@ -34,4 +34,13 @@ const updateCakeType = async (cakeId, updatedCake, updatedPrice) => {
   }
 }
 
-export { getCakeTypes, addCakeType, updateCakeType }
+const deleteCakeType = async (cakeId) => {
+  try {
+    const res = await request.del(rootUrl + cakeId)
+    return res.status
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getCakeTypes, addCakeType, updateCakeType, deleteCakeType }
