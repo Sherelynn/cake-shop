@@ -3,6 +3,7 @@ import {
   CAKETYPES_REJECTED,
   GET_CAKETYPES_FULFILLED,
   ADD_CAKETYPE_FULFILLED,
+  UPDATE_CAKETYPE_FULFILLED,
 } from '../actions/cakeTypes'
 
 const initialState = {
@@ -21,6 +22,15 @@ const cakeTypes = (state = initialState, { type, payload }) => {
       return { ...state, data: payload }
     case ADD_CAKETYPE_FULFILLED:
       return { ...state, data: [...state.data, payload] }
+    case UPDATE_CAKETYPE_FULFILLED:
+      return {
+        ...state,
+        data: state.data.map((cake) => {
+          return cake.id === payload.id
+            ? { ...cake, cakeTypes: payload.cakeTypes, price: payload.price }
+            : cake
+        }),
+      }
     default:
       return state
   }
