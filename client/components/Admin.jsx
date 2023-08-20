@@ -7,7 +7,7 @@ const Admin = () => {
   return (
     <div>
       <h1>Admin Page</h1>
-      <div className="table-container">
+      <div className="table-container admin">
         <table className="table">
           <ManageFlavours />
         </table>
