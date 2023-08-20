@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCakeTypes, postCakeType } from '../actions/cakeTypes'
+import {
+  fetchCakeTypes,
+  postCakeType,
+  patchCakeType,
+} from '../actions/cakeTypes'
 import firstLetterCapitalised from '../src/capsFirstLetter'
 
 const ManageCakeTypes = () => {
@@ -36,16 +40,21 @@ const ManageCakeTypes = () => {
   }
 
   const handleAction = (actionType) => {
-    const { itemInputValue, priceInputValue } = formInput
+    const { itemInputValue, priceInputValue, selectedOption } = formInput
     const updatedInputValue = firstLetterCapitalised(itemInputValue)
 
     if (actionType === 'add') {
       dispatch(postCakeType(updatedInputValue, priceInputValue))
+    } else if (actionType === 'update') {
+      dispatch(
+        patchCakeType(selectedOption, updatedInputValue, priceInputValue),
+      )
     }
 
     setFormInput({
       itemInputValue: '',
       priceInputValue: '',
+      selectedOption: '',
     })
   }
 
@@ -98,6 +107,12 @@ const ManageCakeTypes = () => {
               onClick={() => handleAction('add')}
             >
               Add
+            </button>
+            <button
+              className="input-button"
+              onClick={() => handleAction('update')}
+            >
+              Update
             </button>
           </td>
         </tr>
