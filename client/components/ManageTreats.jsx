@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchTreats, postTreat } from '../actions/treats'
+import { fetchTreats, postTreat, patchTreat } from '../actions/treats'
 import firstLetterCapitalised from '../src/capsFirstLetter'
 
 const ManageTreats = () => {
@@ -36,16 +36,19 @@ const ManageTreats = () => {
   }
 
   const handleAction = (actionType) => {
-    const { itemInputValue, priceInputValue } = formInput
+    const { itemInputValue, priceInputValue, selectedOption } = formInput
     const updatedInputValue = firstLetterCapitalised(itemInputValue)
 
     if (actionType === 'add') {
       dispatch(postTreat(updatedInputValue, priceInputValue))
+    } else if (actionType === 'update' && selectedOption) {
+      dispatch(patchTreat(selectedOption, updatedInputValue, priceInputValue))
     }
 
     setFormInput({
       itemInputValue: '',
       priceInputValue: '',
+      selectedOption: '',
     })
   }
 
@@ -98,6 +101,12 @@ const ManageTreats = () => {
               onClick={() => handleAction('add')}
             >
               Add
+            </button>
+            <button
+              className="input-button"
+              onClick={() => handleAction('update')}
+            >
+              Update
             </button>
           </td>
         </tr>
