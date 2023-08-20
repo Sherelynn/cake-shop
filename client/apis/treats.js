@@ -23,4 +23,15 @@ const addTreat = async (newTreat, newPrice) => {
   }
 }
 
-export { getTreats, addTreat }
+const updateTreat = async (treatId, updatedTreat, updatedPrice) => {
+  try {
+    const res = await request
+      .patch(rootUrl + treatId)
+      .send({ treats: updatedTreat, price: updatedPrice })
+    return res.body
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getTreats, addTreat, updateTreat }
