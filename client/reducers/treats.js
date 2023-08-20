@@ -4,6 +4,7 @@ import {
   GET_TREATS_FULFILLED,
   ADD_TREAT_FULFILLED,
   UPDATE_TREAT_FULFILLED,
+  DELETE_TREAT_FULFILLED,
 } from '../actions/treats'
 
 const initialState = {
@@ -30,6 +31,11 @@ const treats = (state = initialState, { type, payload }) => {
             ? { ...treat, treats: payload.treats, price: payload.price }
             : treat
         }),
+      }
+    case DELETE_TREAT_FULFILLED:
+      return {
+        ...state,
+        data: state.data.filter((treat) => treat.id !== payload),
       }
     default:
       return state
