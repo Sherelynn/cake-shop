@@ -4,6 +4,7 @@ import {
   fetchCakeTypes,
   postCakeType,
   patchCakeType,
+  delCakeType,
 } from '../actions/cakeTypes'
 import firstLetterCapitalised from '../src/capsFirstLetter'
 
@@ -49,6 +50,9 @@ const ManageCakeTypes = () => {
       dispatch(
         patchCakeType(selectedOption, updatedInputValue, priceInputValue),
       )
+    } else if (actionType === 'delete' && selectedOption) {
+      dispatch(delCakeType(selectedOption))
+      dispatch(fetchCakeTypes())
     }
 
     setFormInput({
@@ -113,6 +117,12 @@ const ManageCakeTypes = () => {
               onClick={() => handleAction('update')}
             >
               Update
+            </button>
+            <button
+              className="input-button"
+              onClick={() => handleAction('delete')}
+            >
+              Delete
             </button>
           </td>
         </tr>
