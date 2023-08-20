@@ -1,10 +1,11 @@
-import { getTreats, addTreat } from '../apis/treats'
+import { getTreats, addTreat, updateTreat } from '../apis/treats'
 
 // Action types
 export const TREATS_PENDING = 'TREATS_PENDING'
 export const TREATS_REJECTED = 'TREATS_REJECTED'
 export const GET_TREATS_FULFILLED = 'GET_TREATS_FULFILLED'
 export const ADD_TREAT_FULFILLED = 'ADD_TREAT_FULFILLED'
+export const UPDATE_TREAT_FULFILLED = 'UPDATE_TREAT_FULFILLED'
 
 // Action creators
 export const treatsPending = () => ({
@@ -24,6 +25,11 @@ export const getTreatsFulfilled = (treats) => ({
 export const addTreatFulfilled = (newTreatAndPrice) => ({
   type: ADD_TREAT_FULFILLED,
   payload: newTreatAndPrice,
+})
+
+export const updateTreatFulfilled = (updatedTreatAndPrice) => ({
+  type: UPDATE_TREAT_FULFILLED,
+  payload: updatedTreatAndPrice,
 })
 
 // Async thunk action creators using async/await
@@ -46,3 +52,18 @@ export const postTreat = (newTreat, newPrice) => async (dispatch) => {
     dispatch(treatsRejected(`Error adding treat: ${err.message}`))
   }
 }
+
+export const patchTreat =
+  (treatId, updatedTreat, updatedPrice) => async (dispatch) => {
+    dispatch(treatsPending())
+    try {
+      const updatedTreatAndPrice = await updateTreat(
+        treatId,
+        updatedTreat,
+        updatedPrice,
+      )
+      dispatch(updateTreatFulfilled(updatedTreatAndPrice))
+    } catch (err) {
+      dispatch(treatsRejected(`Error updating treat: ${err.message}`))
+    }
+  }
