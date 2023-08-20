@@ -12,4 +12,15 @@ const getTreats = async () => {
   }
 }
 
-export { getTreats }
+const addTreat = async (newTreat, newPrice) => {
+  try {
+    const res = await request
+      .post(rootUrl)
+      .send({ treats: newTreat, price: newPrice })
+    return res.body
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getTreats, addTreat }
