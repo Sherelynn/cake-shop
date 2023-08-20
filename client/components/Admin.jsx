@@ -1,6 +1,7 @@
 import React from 'react'
 import ManageFlavours from './ManageFlavours'
 import ManageCakeTypes from './ManageCakeTypes'
+import ManageTreats from './ManageTreats'
 
 const Admin = () => {
   return (
@@ -12,6 +13,9 @@ const Admin = () => {
         </table>
         <table className="table">
           <ManageCakeTypes />
+        </table>
+        <table className="table">
+          <ManageTreats />
         </table>
       </div>
     </div>
