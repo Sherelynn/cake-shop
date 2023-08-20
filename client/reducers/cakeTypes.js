@@ -4,6 +4,7 @@ import {
   GET_CAKETYPES_FULFILLED,
   ADD_CAKETYPE_FULFILLED,
   UPDATE_CAKETYPE_FULFILLED,
+  DELETE_CAKETYPE_FULFILLED,
 } from '../actions/cakeTypes'
 
 const initialState = {
@@ -30,6 +31,11 @@ const cakeTypes = (state = initialState, { type, payload }) => {
             ? { ...cake, cakeTypes: payload.cakeTypes, price: payload.price }
             : cake
         }),
+      }
+    case DELETE_CAKETYPE_FULFILLED:
+      return {
+        ...state,
+        data: state.data.filter((cake) => cake.id !== payload)
       }
     default:
       return state
