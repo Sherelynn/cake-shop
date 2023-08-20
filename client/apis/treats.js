@@ -34,4 +34,13 @@ const updateTreat = async (treatId, updatedTreat, updatedPrice) => {
   }
 }
 
-export { getTreats, addTreat, updateTreat }
+const deleteTreat = async (treatId) => {
+  try {
+    const res = await request.del(rootUrl + treatId)
+    return res.status
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getTreats, addTreat, updateTreat, deleteTreat }
