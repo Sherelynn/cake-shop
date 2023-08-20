@@ -1,4 +1,9 @@
-import { getCakeTypes, addCakeType, updateCakeType } from '../apis/cakeTypes'
+import {
+  getCakeTypes,
+  addCakeType,
+  updateCakeType,
+  deleteCakeType,
+} from '../apis/cakeTypes'
 
 // Action types
 export const CAKETYPES_PENDING = 'CAKETYPES_PENDING'
@@ -6,6 +11,7 @@ export const CAKETYPES_REJECTED = 'CAKETYPES_REJECTED'
 export const GET_CAKETYPES_FULFILLED = 'GET_CAKETYPES_FULFILLED'
 export const ADD_CAKETYPE_FULFILLED = 'ADD_CAKETYPE_FULFILLED'
 export const UPDATE_CAKETYPE_FULFILLED = 'UPDATE_CAKETYPE_FULFILLED'
+export const DELETE_CAKETYPE_FULFILLED = 'DELETE_CAKETYPE_FULFILLED'
 
 // Action creators
 export const cakeTypesPending = () => ({
@@ -30,6 +36,11 @@ export const addCakeTypeFulfilled = (newCakeAndPrice) => ({
 export const updateCakeTypeFulfilled = (updatedCakeAndPrice) => ({
   type: UPDATE_CAKETYPE_FULFILLED,
   payload: updatedCakeAndPrice,
+})
+
+export const deleteCakeTypeFulfilled = (cakeIdToDelete) => ({
+  type: DELETE_CAKETYPE_FULFILLED,
+  payload: cakeIdToDelete,
 })
 
 // Async thunk action creators using async/await
@@ -67,3 +78,13 @@ export const patchCakeType =
       dispatch(cakeTypesRejected(`Error updating cake: ${err.message}`))
     }
   }
+
+export const delCakeType = (cakeId) => async (dispatch) => {
+  dispatch(cakeTypesPending())
+  try {
+    const cakeIdToDelete = await deleteCakeType(cakeId)
+    dispatch(deleteCakeTypeFulfilled(cakeIdToDelete))
+  } catch (err) {
+    dispatch(cakeTypesRejected(`Error deleting cake: ${err.message}`))
+  }
+}
