@@ -1,4 +1,4 @@
-import { getCakeTypes, addCakeType, updateCaketype } from '../apis/cakeTypes'
+import { getCakeTypes, addCakeType, updateCakeType } from '../apis/cakeTypes'
 
 // Action types
 export const CAKETYPES_PENDING = 'CAKETYPES_PENDING'
@@ -27,7 +27,7 @@ export const addCakeTypeFulfilled = (newCakeAndPrice) => ({
   payload: newCakeAndPrice,
 })
 
-export const updateCaketypeFulfilled = (updatedCakeAndPrice) => ({
+export const updateCakeTypeFulfilled = (updatedCakeAndPrice) => ({
   type: UPDATE_CAKETYPE_FULFILLED,
   payload: updatedCakeAndPrice,
 })
@@ -57,12 +57,12 @@ export const patchCakeType =
   (cakeId, updatedCake, updatedPrice) => async (dispatch) => {
     dispatch(cakeTypesPending())
     try {
-      const updatedCakeAndPrice = await updateCaketype(
+      const updatedCakeAndPrice = await updateCakeType(
         cakeId,
         updatedCake,
         updatedPrice,
       )
-      dispatch(updateCaketypeFulfilled(updatedCakeAndPrice))
+      dispatch(updateCakeTypeFulfilled(updatedCakeAndPrice))
     } catch (err) {
       dispatch(cakeTypesRejected(`Error updating cake: ${err.message}`))
     }

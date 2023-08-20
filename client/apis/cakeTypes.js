@@ -23,7 +23,7 @@ const addCakeType = async (newCake, newPrice) => {
   }
 }
 
-const updateCaketype = async (cakeId, updatedCake, updatedPrice) => {
+const updateCakeType = async (cakeId, updatedCake, updatedPrice) => {
   try {
     const res = await request
       .patch(rootUrl + cakeId)
@@ -34,4 +34,4 @@ const updateCaketype = async (cakeId, updatedCake, updatedPrice) => {
   }
 }
 
-export { getCakeTypes, addCakeType, updateCaketype }
+export { getCakeTypes, addCakeType, updateCakeType }
