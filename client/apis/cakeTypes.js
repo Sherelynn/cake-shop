@@ -23,4 +23,15 @@ const addCakeType = async (newCake, newPrice) => {
   }
 }
 
-export { getCakeTypes, addCakeType }
+const updateCaketype = async (cakeId, updatedCake, updatedPrice) => {
+  try {
+    const res = await request
+      .patch(rootUrl + cakeId)
+      .send({ cakeTypes: updatedCake, price: updatedPrice })
+    return res.body
+  } catch (err) {
+    return handleError(err)
+  }
+}
+
+export { getCakeTypes, addCakeType, updateCaketype }
