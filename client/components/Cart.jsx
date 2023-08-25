@@ -44,6 +44,11 @@ const Cart = () => {
     }
   }
 
+  const getChosenItem = (itemId, itemsArray, itemCategory) => {
+    const chosenItem = itemsArray.find((item) => item.id === Number(itemId))
+    return chosenItem ? chosenItem[itemCategory] : ''
+  }
+
   return (
     <>
       <h1>Cart</h1>
@@ -78,11 +83,7 @@ const Cart = () => {
               <td>
                 <p>
                   Chosen flavour:{' '}
-                  {
-                    flavours.find(
-                      (flavour) => flavour.id === Number(selectedFlavour),
-                    )?.flavours
-                  }
+                  {getChosenItem(selectedFlavour, flavours, 'flavours')}
                 </p>
               </td>
             </tr>
@@ -107,17 +108,9 @@ const Cart = () => {
               <td>
                 <p>
                   Chosen cake:{' '}
-                  {
-                    cakeTypes.find(
-                      (cakeType) => cakeType.id === Number(selectedCake),
-                    )?.cakeTypes
-                  }{' '}
+                  {getChosenItem(selectedCake, cakeTypes, 'cakeTypes')}{' '}
                   {selectedCake
-                    ? `$${
-                        cakeTypes.find(
-                          (cakeType) => cakeType.id === Number(selectedCake),
-                        )?.price
-                      }`
+                    ? `$${getChosenItem(selectedCake, cakeTypes, 'price')}`
                     : ' '}
                 </p>
               </td>
@@ -156,16 +149,14 @@ const Cart = () => {
                   Chosen treats:{' '}
                   {selectedTreats.length > 0 &&
                     selectedTreats
-                      .map((treatId) => {
-                        const treat = treats.find(
-                          (treat) => treat.id === Number(treatId),
-                        )?.treats
-                        const price = treats.find(
-                          (treat) => treat.id === Number(treatId),
-                        )?.price
-                        const treatAndPrice = `${treat} $${price}`
-                        return treatAndPrice ? treatAndPrice : ''
-                      })
+                      .map(
+                        (treatId) =>
+                          `${getChosenItem(
+                            treatId,
+                            treats,
+                            'treats',
+                          )} $${getChosenItem(treatId, treats, 'price')}`,
+                      )
                       .join(', ')}
                 </p>
               </td>
