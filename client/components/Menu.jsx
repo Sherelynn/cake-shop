@@ -13,13 +13,7 @@ const Menu = () => {
 
   useEffect(() => {
     dispatch(fetchFlavours())
-  }, [])
-
-  useEffect(() => {
     dispatch(fetchCakeTypes())
-  }, [])
-
-  useEffect(() => {
     dispatch(fetchTreats())
   }, [])
 
