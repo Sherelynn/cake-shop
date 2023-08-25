@@ -18,7 +18,7 @@ root.render(
       domain="sherelynn.au.auth0.com"
       clientId="JhJ7Xu3EHvhggI7s9LqodyHMH8YKJy6e"
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: window.location.origin + '/login',
       }}
     >
       <Provider store={store}>
