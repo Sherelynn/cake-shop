@@ -122,7 +122,7 @@ h2 {
 /* Menu Page - Tables */
 
 .table-container {
-  margin-top: 15rem;
+  margin-top: 5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -147,6 +147,19 @@ h2 {
 
 .table td {
   font-size: 2rem;
+}
+
+#menu {
+  height: calc(100vh - 30rem);
+}
+
+#cart {
+  height: calc(100vh - 15rem);
+}
+
+.cart-table {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 /* Login Page */
@@ -270,10 +283,6 @@ p {
   max-width: 9rem;
 }
 
-.admin {
-  margin-top: 5rem;
-}
-
 /* Media Queries */
 
 @media only screen and (max-width: 43em) {
@@ -327,6 +336,9 @@ p {
   p {
     font-size: 2rem;
   }
+  #menu {
+    height: auto;
+  }
 }
 
 @media only screen and (max-width: 24.2em) {
@@ -366,6 +378,13 @@ p {
   }
   .user-details {
     font-size: 1.5rem;
+  }
+  select,
+  option {
+    font-size: 1.4rem;
+  }
+  input {
+    font-size: 1.3rem;
   }
   p {
     font-size: 1.8rem;
