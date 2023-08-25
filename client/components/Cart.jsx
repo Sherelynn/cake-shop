@@ -49,6 +49,19 @@ const Cart = () => {
     return chosenItem ? chosenItem[itemCategory] : ''
   }
 
+  const calculateTotalPrice = () => {
+    const cakePrice = selectedCake
+      ? Number(getChosenItem(selectedCake, cakeTypes, 'price'))
+      : 0
+
+    const treatsPrice = selectedTreats.reduce((total, treatId) => {
+      const treatPrice = Number(getChosenItem(treatId, treats, 'price'))
+      return total + treatPrice
+    }, 0)
+
+    return cakePrice + treatsPrice
+  }
+
   return (
     <>
       <h1>Cart</h1>
@@ -159,6 +172,21 @@ const Cart = () => {
                       )
                       .join(', ')}
                 </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Total Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p>Total: ${calculateTotalPrice()}</p>
               </td>
             </tr>
           </tbody>
