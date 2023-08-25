@@ -231,7 +231,7 @@ h2 {
   background-color: rgba(104, 85, 224, 1);
 }
 
-.button-admin {
+.button-admin, .button-cart {
   text-decoration: none;
 }
 
