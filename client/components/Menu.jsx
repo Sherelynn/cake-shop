@@ -4,12 +4,14 @@ import { fetchFlavours } from '../actions/flavours'
 import { fetchCakeTypes } from '../actions/cakeTypes'
 import { fetchTreats } from '../actions/treats'
 import Cart from './Cart'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const Menu = () => {
   const dispatch = useDispatch()
   const flavours = useSelector((state) => state.flavours.data)
   const cakeTypes = useSelector((state) => state.cakeTypes.data)
   const treats = useSelector((state) => state.treats.data)
+  const { isAuthenticated } = useAuth0()
 
   useEffect(() => {
     dispatch(fetchFlavours())
@@ -70,10 +72,12 @@ const Menu = () => {
           </table>
         </div>
       </div>
-      <div id="cart">
-        {/* Display Cart */}
-        <Cart />
-      </div>
+      {/* Display Cart */}
+      {isAuthenticated && (
+        <div id="cart">
+          <Cart />
+        </div>
+      )}
     </>
   )
 }
