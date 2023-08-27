@@ -6,7 +6,6 @@ server/public/bundle.js.map
 static
 npm-debug.log
 bundle.*
-.env
 coverage
 .DS_Store
 dev.sqlite3
