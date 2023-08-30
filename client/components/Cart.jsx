@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchFlavours } from '../actions/flavours'
 import { fetchCakeTypes } from '../actions/cakeTypes'
 import { fetchTreats } from '../actions/treats'
+import StripeContainer from './StripeContainer'
 
 const Cart = () => {
   const dispatch = useDispatch()
@@ -242,6 +243,24 @@ const Cart = () => {
             </tr>
           </tbody>
         </table>
+      </div>
+      <div className="payment-container">
+        <div className="payment">
+          {showItem ? (
+            <StripeContainer
+              totalAmount={totalAmount}
+              numberOfItems={numberOfItems}
+            />
+          ) : (
+            <>
+              {' '}
+              <p className="amount">Total Amount: ${totalAmount}</p>
+              <button className="button pay" onClick={() => setShowItem(true)}>
+                Pay
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </>
   )
