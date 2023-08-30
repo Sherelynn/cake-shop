@@ -62,6 +62,47 @@ const Cart = () => {
     return cakePrice + treatsPrice
   }
 
+  const calculateNumberOfItems = () => {
+    const numberOfCakes = selectedCake ? 1 : 0
+    const numberOfTreats = selectedTreats.length
+
+    return numberOfCakes + numberOfTreats
+  }
+
+  const totalAmount = calculateTotalPrice()
+  const numberOfItems = calculateNumberOfItems()
+
+  const [chosenItemsSummary, setChosenItemsSummary] = useState([])
+
+  const updateChosenItemsSummary = () => {
+    const chosenItems = []
+
+    if (selectedFlavour) {
+      const chosenFlavour = getChosenItem(selectedFlavour, flavours, 'flavours')
+      chosenItems.push(`Cake Flavour: ${chosenFlavour}`)
+    }
+
+    if (selectedCake) {
+      const chosenCake = getChosenItem(selectedCake, cakeTypes, 'cakeTypes')
+      const cakePrice = getChosenItem(selectedCake, cakeTypes, 'price')
+      chosenItems.push(`${chosenCake} - $${cakePrice}`)
+    }
+
+    selectedTreats.forEach((treatId) => {
+      const chosenTreat = getChosenItem(treatId, treats, 'treats')
+      const treatPrice = getChosenItem(treatId, treats, 'price')
+      chosenItems.push(`${chosenTreat} - $${treatPrice}`)
+    })
+
+    setChosenItemsSummary(chosenItems)
+  }
+
+  useEffect(() => {
+    updateChosenItemsSummary()
+  }, [selectedFlavour, selectedCake, selectedTreats])
+
+  const [showItem, setShowItem] = useState(false)
+
   return (
     <>
       <h1>Cart</h1>
@@ -180,13 +221,23 @@ const Cart = () => {
         <table className="table">
           <thead>
             <tr>
-              <th>Total Payment</th>
+              <th>Chosen Items</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <p>Total: ${calculateTotalPrice()}</p>
+                <p>Number of Items: {numberOfItems}</p>
+                {chosenItemsSummary.length > 0 && (
+                  <>
+                    <ul>
+                      {chosenItemsSummary.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                <p>Total Amount: ${totalAmount}</p>
               </td>
             </tr>
           </tbody>
