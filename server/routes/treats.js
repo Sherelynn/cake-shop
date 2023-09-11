@@ -2,7 +2,6 @@ const express = require('express')
 const db = require('../db/treats')
 const router = express.Router()
 const handleErrors = require('./handleErrors')
-const { renderSync } = require('sass')
 
 router.get('/', async (req, res) => {
   try {
