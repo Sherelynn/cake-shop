@@ -1,23 +1,9 @@
-const express = require('express')
-const app = express()
 require('dotenv').config()
-const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST)
-const bodyParser = require('body-parser')
-const cors = require('cors')
+const express = require('express')
+const router = express.Router()
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  }),
-)
-
-app.options('*', cors())
-
-app.post('/payment', cors(), async (req, res) => {
+router.post('/', async (req, res) => {
   let { amount, id } = req.body
   try {
     const payment = await stripe.paymentIntents.create({
@@ -26,6 +12,7 @@ app.post('/payment', cors(), async (req, res) => {
       description: 'The Flourist NZ',
       payment_method: id,
       confirm: true,
+      return_url: `${process.env.SERVER_URL}/menu`,
     })
     console.log('Payment', payment)
     res.json({
@@ -41,6 +28,4 @@ app.post('/payment', cors(), async (req, res) => {
   }
 })
 
-app.listen(process.env.PORT || 4000, () => {
-  console.log('Sever is listening on port 4000')
-})
+module.exports = router
