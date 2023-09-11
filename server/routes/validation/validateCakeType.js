@@ -22,10 +22,13 @@ const validateCakeType = (req, res, next) => {
   // Check if cakeType is one of the valid cake types
   if (!validCakeTypes.includes(newCake)) {
     return res.status(400).json({ error: 'Invalid cake type.' })
-  }
-
+  } 
+  
   // Check if price is valid
-  if (!price > 0 || price === '') {
+  else if (
+    Math.sign(Number(price)) === 0 ||
+    Math.sign(Number(price)) === -1
+  ) {
     return res.status(400).json({ error: 'Invalid pricing.' })
   }
 
