@@ -23,7 +23,7 @@ router.post('/', validateTreat, async (req, res) => {
   }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', validateTreat, async (req, res) => {
   const id = req.params.id
   const updatedTreat = req.body
   try {

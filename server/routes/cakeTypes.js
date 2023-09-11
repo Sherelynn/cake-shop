@@ -23,7 +23,7 @@ router.post('/', validateCakeTypes, async (req, res) => {
   }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', validateCakeTypes, async (req, res) => {
   const id = req.params.id
   const updatedCakeType = req.body
   try {
