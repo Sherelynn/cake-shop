@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('../db/treats')
 const router = express.Router()
 const handleErrors = require('./handleErrors')
+const validateTreat = require('./validation/validateTreat')
 
 router.get('/', async (req, res) => {
   try {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', validateTreat, async (req, res) => {
   try {
     const id = await db.addTreat(req.body)
     const treat = await db.getTreatById(id)
