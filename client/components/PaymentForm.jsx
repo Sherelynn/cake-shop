@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import axios from 'axios'
+import request from 'superagent'
 
 const CARD_OPTIONS = {
   iconStyle: 'solid',
@@ -37,12 +37,11 @@ const PaymentForm = ({ totalAmount }) => {
     if (!error) {
       try {
         const { id } = paymentMethod
-        const response = await axios.post('http://localhost:4000/payment', {
-          amount: totalAmount * 100,
-          id,
-        })
+        const response = await request
+          .post('/api/v1/payment')
+          .send({ amount: totalAmount * 100, id })
 
-        if (response.data.success) {
+        if (response.body.success) {
           console.log('Successful payment')
           setSuccess(true)
         }
