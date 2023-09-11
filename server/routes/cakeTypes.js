@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('../db/cakeTypes')
 const router = express.Router()
 const handleErrors = require('./handleErrors')
+const validateCakeTypes = require('../routes/validation/validateCakeType')
 
 router.get('/', async (req, res) => {
   try {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', validateCakeTypes, async (req, res) => {
   try {
     const id = await db.addCakeType(req.body)
     const typeOfCake = await db.getCakeTypeById(id)
