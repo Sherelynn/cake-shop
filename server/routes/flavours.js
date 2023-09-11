@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('../db/flavours')
 const router = express.Router()
 const handleErrors = require('./handleErrors')
+const validateFlavour = require('./validation/validateFlavour')
 
 router.get('/', async (req, res) => {
   try {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', validateFlavour, async (req, res) => {
   try {
     const id = await db.addFlavour(req.body)
     const flavour = await db.getFlavourById(id)
@@ -22,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', validateFlavour, async (req, res) => {
   const id = req.params.id
   const updatedFlavour = req.body
   try {
