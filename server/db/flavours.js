@@ -20,8 +20,20 @@ const addFlavour = async (newFlavour, db = connection) => {
   return id
 }
 
-const updateFlavour = async (id, updatedFlavour, db = connection) =>
+const updateFlavour = async (id, updatedFlavour, db = connection) => {
+  // Check if a flavour with the same name exists, excluding the one being updated
+  const existingFlavour = await db('flavours')
+    .whereNot('id', id)
+    .where('flavours', updatedFlavour.flavours)
+    .first()
+
+  if (existingFlavour) {
+    throw new Error('Flavour with the same name already exists.')
+  }
+
+  // If it doesn't exist, update the flavour
   await db('flavours').where({ id }).update(updatedFlavour)
+}
 
 const deleteFlavour = async (id, db = connection) =>
   await db('flavours').where({ id }).delete()
