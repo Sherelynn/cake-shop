@@ -23,8 +23,20 @@ const addCakeType = async (newCakeType, db = connection) => {
   return id
 }
 
-const updateCakeType = async (id, updatedCaketype, db = connection) =>
-  await db('cake_types').where({ id }).update(updatedCaketype)
+const updateCakeType = async (id, updatedCakeType, db = connection) => {
+  // Check if a cake type with the same name already exists
+  const existingCakeType = await db('cake_types')
+    .whereNot('id', id)
+    .where('cakeTypes', updatedCakeType.cakeTypes)
+    .first()
+  
+  if (existingCakeType) {
+    throw new Error('Cake type with the same name already exists.')
+  }
+
+  // If it doesn't exist, update the cake type
+  await db('cake_types').where({ id }).update(updatedCakeType)
+}
 
 const deleteCakeType = async (id, db = connection) =>
   await db('cake_types').where({ id }).delete()
