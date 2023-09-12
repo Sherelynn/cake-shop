@@ -20,8 +20,20 @@ const addTreat = async (newTreat, db = connection) => {
   return id
 }
 
-const updateTreat = async (id, updatedTreat, db = connection) =>
+const updateTreat = async (id, updatedTreat, db = connection) => {
+  // Check if a treat with the same name already exists
+  const existingTreat = await db('treats')
+    .whereNot('id', id)
+    .where('treats', updatedTreat.treats)
+    .first()
+
+  if (existingTreat) {
+    throw new Error('Treat with the same name already exists')
+  }
+
+  // If it doesn't exist, update the treat
   await db('treats').where({ id }).update(updatedTreat)
+}
 
 const deleteTreat = async (id, db = connection) =>
   await db('treats').where({ id }).delete()
